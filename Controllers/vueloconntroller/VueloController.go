@@ -1,8 +1,7 @@
 package vuelocontroller
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"database/sql"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,7 +9,7 @@ import (
 
 //VueloController ..
 type VueloController struct {
-	C *Vuelo
+	Model *sql.DB
 }
 
 // Vuelo ..
@@ -20,25 +19,14 @@ type Vuelo struct {
 }
 
 // NewController ..
-func NewController() VueloController {
-	router := gin.Default()
-	router.GET("/addvuelo", AddVuelo)
+func NewController(db *sql.DB) {
+	// recibe una instancia de la db para que las demas funciones la usen
 
-	return VueloController{C}
 }
 
-func (v *VueloController) AddVuelo(ctx *gin.Context) {
-	body, err := ioutil.ReadAll(ctx.Request.Body)
-	if err != nil {
-		// panic
-	}
-
-	var vuelo Vuelo
-	if err = json.Unmarshal(body, &car); err != nil {
-		panic(error.Error())
-	}
-
+// AddVuelo ..
+func AddVuelo(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "car added",
+		"message": "Esta andando llegaste hasta aca",
 	})
 }

@@ -1,13 +1,18 @@
 package main
 
 import (
+	vuelocontroller "github.com/JeremiasCaballero/ApiRestGolang/Controllers/vueloconntroller"
 	vuelomodel "github.com/JeremiasCaballero/ApiRestGolang/models/vuelo"
+	"github.com/JeremiasCaballero/ApiRestGolang/router"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
 	db := vuelomodel.NewDataBase()
 	defer db.DB.Close()
-	db.AddVuelo("Maimi")
+	// le paso la instancia de la base de datos
+	router.Start()
+
+	vuelocontroller.NewController(db.DB)
 
 }
