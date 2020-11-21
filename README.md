@@ -1,5 +1,5 @@
 # ApiGolangMvc
-<h2>Pequeño proyecto en formato mvc para el seminario de golang<h2>
+<h3>Pequeño proyecto en formato mvc para el seminario de golang<h3>
 
 <h3>Como iniciar la ApiRest</h3>
 <ul>
