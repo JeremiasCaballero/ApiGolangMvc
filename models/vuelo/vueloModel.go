@@ -2,7 +2,6 @@ package vuelomodel
 
 import (
 	"database/sql"
-	"fmt"
 	// comment
 )
 
@@ -22,10 +21,12 @@ func NewDataBase() Database {
 	db, err := sql.Open("mysql", "root:@/vuelo")
 
 	if err != nil {
-		panic(err.Error())
+		panic("Failed to connect to database!")
 	}
-
-	fmt.Print("Conection suceful")
+	err = db.Ping()
+	if err != nil {
+		panic("error al conectar")
+	}
 	return Database{db}
 }
 
@@ -37,4 +38,13 @@ func (db *Database) AddVuelo(d string) {
 	}
 
 	defer insert.Close()
+}
+
+// DeleteVuelo ..
+func (db *Database) DeleteVuelo(id int) {
+	delete, err := db.DB.Query("DELETE FROM vuelo WHERE id_vuelo = ?", id)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer delete.Close()
 }

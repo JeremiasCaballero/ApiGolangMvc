@@ -8,8 +8,9 @@ import (
 // Start ..
 func Start() {
 	r := gin.Default()
-	r.GET("/prueba", vuelocontroller.AddVuelo)
-
+	r.POST("/addvuelo", vuelocontroller.AddVuelo)
+	r.GET("/getVuelo", vuelocontroller.GetVuelo)
+	r.DELETE("/deletevuelo/:id", vuelocontroller.DeleteVuelo)
 	r.Run()
 
 }

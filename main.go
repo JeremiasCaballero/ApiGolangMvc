@@ -11,8 +11,7 @@ func main() {
 	db := vuelomodel.NewDataBase()
 	defer db.DB.Close()
 	// le paso la instancia de la base de datos
+	vuelocontroller.NewController(&db)
 	router.Start()
-
-	vuelocontroller.NewController(db.DB)
 
 }
