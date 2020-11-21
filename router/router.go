@@ -9,8 +9,10 @@ import (
 func Start() {
 	r := gin.Default()
 	r.POST("/addvuelo", vuelocontroller.AddVuelo)
-	r.GET("/getVuelo", vuelocontroller.GetVuelo)
+	r.GET("/getVuelo/:id", vuelocontroller.GetVuelo)
+	r.GET("/getvuelos", vuelocontroller.GetVuelos)
 	r.DELETE("/deletevuelo/:id", vuelocontroller.DeleteVuelo)
+	r.PUT("/updatevuelo/:id", vuelocontroller.UpdateVuelo)
 	r.Run()
 
 }

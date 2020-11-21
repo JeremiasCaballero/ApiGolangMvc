@@ -48,3 +48,41 @@ func (db *Database) DeleteVuelo(id int) {
 	}
 	defer delete.Close()
 }
+func (db *Database) getVuelo(id int) *Vuelo{
+	var v *Vuelo
+	select, err := db.DB.Query("SELECT *FROM vuelo WHERE id_vuelo = ?", id)
+	if err != nil {
+		panic(err.Error())
+	}
+	v = append(select)
+	defer select.close()
+	return select
+}
+// GetVuelos ..
+func (db *Database) GetVuelos() []*Vuelo {
+	var v []*Vuelo
+
+	s, err := db.DB.Query("SELECT *FROM vuelo")
+
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for s.Next() {
+		var e Vuelo
+		s.Scan(&e.ID, &e.Destino)
+		v = append(v, &e)
+
+	}
+	defer s.Close()
+	return v
+}
+
+// UpdateVuelo ..
+func (db *Database) UpdateVuelo(id int, d string) {
+	update, err := db.DB.Query("UPDATE  vuelo SET destino = ? WHERE id_vuelo = ?", d, id)
+	if err != nil {
+		panic(err.Error())
+	}
+	defer update.Close()
+}

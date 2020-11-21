@@ -49,9 +49,51 @@ func DeleteVuelo(ctx *gin.Context) {
 	})
 }
 
+// GetVuelos ..
+func GetVuelos(ctx *gin.Context) {
+	v := modelo.GetVuelos()
+	ctx.JSON(http.StatusCreated, gin.H{
+		"Object": v,
+	})
+}
+
 // GetVuelo ..
 func GetVuelo(ctx *gin.Context) {
-	ctx.JSON(http.StatusCreated, gin.H{
+	id := ctx.Param("id")
+
+	var convertido int
+
+	convertido, err := strconv.Atoi(id)
+
+	if err != nil {
+		panic("No es un integer")
+	}
+	var param entidad.VueloJSON
+
+	ctx.BindJSON(&param)
+
+	modelo.getVuelo(param)
+	ctx.JSON(http.StatusOK, gin.H{
 		"Objeto Creado": "adada",
+	})
+}
+
+// UpdateVuelo ..
+func UpdateVuelo(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	var convertido int
+
+	convertido, err := strconv.Atoi(id)
+
+	if err != nil {
+		panic("No es un integer")
+	}
+	var param entidad.VueloJSON
+	ctx.BindJSON(&param)
+	modelo.UpdateVuelo(convertido, param.Destino)
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"Objeto editado": &param,
 	})
 }
