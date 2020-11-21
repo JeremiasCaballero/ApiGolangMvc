@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -30,6 +31,7 @@ func (c *HTTPController) Run() {
 func makeEndpoints(r *gin.Engine, s *service.Vuelo) {
 	r.GET("/vuelos/:id", makeFindHandler(s))
 	r.POST("/addvuelo", makeAddHandler(s))
+	r.DELETE("/deletevuelo/:id", makeDeleteHandler(s))
 }
 
 func makeFindHandler(s *service.Vuelo) gin.HandlerFunc {
@@ -39,6 +41,7 @@ func makeFindHandler(s *service.Vuelo) gin.HandlerFunc {
 
 		v := (*s).FindByID(uint(i))
 
+		fmt.Println(&v)
 		c.JSON(http.StatusOK, gin.H{
 			"vuelo": v,
 		})
@@ -56,5 +59,17 @@ func makeAddHandler(s *service.Vuelo) gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{
 			"vuelo": &param,
 		})
+	}
+}
+
+func makeDeleteHandler(S *service.Vuelo) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		i, _ := strconv.Atoi(c.Param("id"))
+
+		c.BindJSON(i)
+
+		(*S).Remove(uint(i))
+
+		c.JSON(http.StatusNoContent, gin.H{})
 	}
 }

@@ -42,6 +42,12 @@ func (database *Database) Add(v *model.Vuelo) {
 // FindByID ...
 func (database *Database) FindByID(ID uint) *model.Vuelo {
 	var v model.Vuelo
-	database.db.Find(&v, ID)
+	database.db.First(&v, ID)
 	return &v
+}
+
+// Remove ...
+func (database *Database) Remove(i uint) {
+	var v model.Vuelo
+	database.db.Unscoped().Delete(&v, i)
 }

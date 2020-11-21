@@ -31,4 +31,5 @@ func (s *service) FindByID(ID uint) *model.Vuelo {
 }
 
 func (s *service) Remove(ID uint) {
+	s.db.Remove(ID)
 }
